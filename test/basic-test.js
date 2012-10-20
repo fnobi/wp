@@ -4,7 +4,7 @@ var buster = require('buster'),
 buster.testCase('basic', {
 	'open url': function () {
 		assert(
-			wp.defaultBrowser.commandToOpen('http://fnobi.com/')
+			wp.defaultBrowser.commandToOpen('http://facebook.com/')
 			==
 			'open "http://facebook.com/"'
 		);
@@ -22,7 +22,7 @@ buster.testCase('basic', {
 	},
 	'with place': function () {
 		wp.definePlace('http://facebook.com/', {
-			key     : ['fb', 'facebook', 'facebook.com']
+			keys : ['fb', 'facebook', 'facebook.com']
 		});
 
 		var place = wp.findPlace('fb');
@@ -36,7 +36,7 @@ buster.testCase('basic', {
 	'with place and browser': function () {
 		wp.defineBrowser('safari', ['s', 'safari']);
 		wp.definePlace('http://facebook.com/', {
-			key     : ['fb', 'facebook.com'],
+			keys    : ['fb', 'facebook.com'],
 			browser : 's'
 		});
 

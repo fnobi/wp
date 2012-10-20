@@ -1,8 +1,14 @@
 #!/usr/bin/env node
 
-var wp = require(__dirname + '/../');
+var commander = require('commander'),
+    pkj       = require(__dirname + '/../package.json'),
+    wp        = require(__dirname + '/../');
 
-var arg = 'fb';
+commander
+	.version(pkj.version)
+	.parse(process.argv);
+
+var arg = commander.args.shift();
 var option = 's';
 
 var browser = wp.findBrowser(option);
@@ -13,13 +19,12 @@ if (!browser) {
 var place = wp.findPlace(arg) || {};
 var url = place.url || arg;
 
-browser.open(url);
-// browser.commandToOpen(url) => 'open -a "safari" "http://facebook.com"'
-
-// こちら側で実行するカタチにするなら↓
-// exec(browser.commandToOpen(url), function(err, stdout, stderr){
-// 	/* some process */
-// });
+browser.open(url, function (err, res) {
+	if (err) {
+		console.error(err);
+		return;
+	}
+});
 
 // 環境を定義
 // wp.defineEnv('mac');
