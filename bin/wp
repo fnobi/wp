@@ -11,12 +11,12 @@ commander
 var arg = commander.args.shift();
 var option = 's';
 
-var browser = wp.findBrowser(option);
+var browser = wp.Browser.find(option);
 if (!browser) {
-	browser = wp.defaultBrowser;
+	browser = wp.Browser.defaultBrowser;
 }
 
-var place = wp.findPlace(arg) || {};
+var place = wp.Place.find(arg) || {};
 var url = place.url || arg;
 
 browser.open(url, function (err, res) {
