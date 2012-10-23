@@ -14,7 +14,7 @@ buster.testCase('command to open url', {
 		browser.saveAs(['safari', 's']);
 
 		assert(
-			new wp.Place('http://fnobi.com/').commandToOpen('s')
+			new wp.Place('http://fnobi.com/').commandToOpen(browser)
 			==
 			'open -a "safari" "http://fnobi.com/"'
 		);
@@ -34,7 +34,7 @@ buster.testCase('command to open url', {
 		browser.saveAs(['safari', 's']);
 
 		var place = new wp.Place('http://facebook.com/');
-		place.setBrowser('s');
+		place.setBrowser(wp.Browser.find('s'));
 		place.saveAs(['fb', 'facebook', 'facebook.com']);
 
 		assert(
