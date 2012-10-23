@@ -4,47 +4,41 @@ var buster = require('buster'),
 buster.testCase('command to open url', {
 	'normally': function () {
 		assert(
-			wp.Browser.defaultBrowser.commandToOpen('http://facebook.com/')
+			new wp.Place('http://facebook.com/').commandToOpen()
 			==
 			'open "http://facebook.com/"'
 		);
 	},
 	'with browser': function () {
-		wp.Browser.define('safari', ['s', 'safari']);
-
-		var browser = wp.Browser.find('s');
+		var browser = new wp.Browser('safari');
+		browser.saveAs(['safari', 's']);
 
 		assert(
-			browser.commandToOpen('http://fnobi.com/')
+			new wp.Place('http://fnobi.com/').commandToOpen('s')
 			==
 			'open -a "safari" "http://fnobi.com/"'
 		);
 	},
 	'with place': function () {
-		wp.Place.define('http://facebook.com/', {
-			keys : ['fb', 'facebook', 'facebook.com']
-		});
-
-		var place = wp.Place.find('fb');
+		var place = new wp.Place('http://facebook.com/');
+		place.saveAs(['fb', 'facebook', 'facebook.com']);
 
 		assert(
-			wp.Browser.defaultBrowser.commandToOpen(place.url)
+			wp.Place.find('fb').commandToOpen()
 			==
 			'open "http://facebook.com/"'
 		);
 	},
 	'with place and browser': function () {
-		wp.Browser.define('safari', ['s', 'safari']);
-		wp.Place.define('http://facebook.com/', {
-			keys    : ['fb', 'facebook.com'],
-			browser : 's'
-		});
+		var browser = new wp.Browser('safari');
+		browser.saveAs(['safari', 's']);
 
-		var browser = wp.Browser.find('safari');
-		var place = wp.Place.find('fb');
+		var place = new wp.Place('http://facebook.com/');
+		place.setBrowser('s');
+		place.saveAs(['fb', 'facebook', 'facebook.com']);
 
 		assert(
-			browser.commandToOpen(place)
+			wp.Place.find('fb').commandToOpen()
 			==
 			'open -a "safari" "http://facebook.com/"'
 		);
