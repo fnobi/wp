@@ -3,6 +3,7 @@
 	"version": "0.0.1",
 	"bin": "bin/wp",
 	"dependencies": {
-		"commander": "1.0.5"
+		"optcollect": "*",
+		"underscore": "1.4.2"
 	}
 }

@@ -1,0 +1,14 @@
+{
+	"browsers": {
+		"safari": ["s"],
+		"google chrome": ["c", "chrome"],
+		"firefox": ["f", "firefox"],
+		"opera": ["o", "opera"]
+	},
+	"places": {
+		"http://facebook.com": {
+			"keys": ["fb"],
+			"browserName" : "safari"
+		}
+	}
+}

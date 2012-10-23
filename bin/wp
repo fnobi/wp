@@ -1,33 +1,24 @@
 #!/usr/bin/env node
 
-var commander = require('commander'),
-    pkj       = require(__dirname + '/../package.json'),
-    wp        = require(__dirname + '/../');
+var pkj        = require(__dirname + '/../package.json'),
+    wp         = require(__dirname + '/../'),
+    _          = require('underscore'),
+    OptCollect = require('optcollect');
 
-commander
-	.version(pkj.version)
-	.parse(process.argv);
+var opts = new OptCollect();
 
-var arg = commander.args.shift();
-var option = 's';
+var placeName    = _.last(opts.args);
+var option = _.first(opts.options);
+
+wp.loadBookmarkFile(__dirname + '/../var/bookmark.json');
 
 var browser = wp.Browser.find(option);
-if (!browser) {
-	browser = wp.Browser.defaultBrowser;
-}
 
-var place = wp.Place.find(arg) || {};
-var url = place.url || arg;
+var place = wp.Place.find(placeName) || new wp.Place(placeName);
 
-browser.open(url, function (err, res) {
+place.open(browser, function (err, res) {
 	if (err) {
 		console.error(err);
 		return;
 	}
 });
-
-// 環境を定義
-// wp.defineEnv('mac');
-
-// 定義したbrowserやplaceを保存
-// wp.save();
