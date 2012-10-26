@@ -9,6 +9,14 @@
 		"http://facebook.com": {
 			"keys": ["fb"],
 			"browserName" : "safari"
+		},
+		"http://sfcclip.net/outputclip/": {
+			"keys": ["opc", "outputclip"],
+			"browserName" : "safari"
+		},
+		"http://sfcclip.net/outputclip/enterclip.html": {
+			"keys": ["enterclip"],
+			"browserName" : "safari"
 		}
 	}
 }

@@ -1,9 +1,27 @@
 {
-	"name": "wp",
-	"version": "0.0.1",
-	"bin": "bin/wp",
-	"dependencies": {
-		"optcollect": "*",
-		"underscore": "1.4.2"
-	}
+  "name": "wp",
+  "version": "0.0.1",
+  "bin": {
+    "wp": "bin/wp"
+  },
+  "dependencies": {
+    "optcollect": "*",
+    "underscore": "1.4.2"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "author": "fnobi <shin@fnobi.com> (http://github.com/fnobi)",
+  "description": "quickly open url or built-in bookmark with browser.",
+  "homepage": "http://github.com/fnobi/wp",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fnobi/wp.git"
+  },
+  "scripts": {
+    "test": "buster test"
+  },
+  "os" : ["darwin"]
 }
