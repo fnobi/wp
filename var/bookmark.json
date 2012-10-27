@@ -8,15 +8,15 @@
 	"places": {
 		"http://facebook.com": {
 			"keys": ["fb"],
-			"browserName" : "safari"
+			"appName" : "safari"
 		},
 		"http://sfcclip.net/outputclip/": {
 			"keys": ["opc", "outputclip"],
-			"browserName" : "safari"
+			"appName" : "safari"
 		},
 		"http://sfcclip.net/outputclip/enterclip.html": {
 			"keys": ["enterclip"],
-			"browserName" : "safari"
+			"appName" : "safari"
 		}
 	}
 }

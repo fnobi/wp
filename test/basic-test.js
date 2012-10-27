@@ -10,7 +10,8 @@ buster.testCase('command to open url', {
 	},
 	'with browser': function () {
 		var browser = new wp.Browser('safari');
-		browser.saveAs(['safari', 's']);
+		browser.appName = 'safari';
+		browser.saveAsOption(['safari', 's']);
 
 		assert.equals(
 			new wp.Place('http://fnobi.com/').commandToOpen(browser),
@@ -28,7 +29,8 @@ buster.testCase('command to open url', {
 	},
 	'with place and browser': function () {
 		var browser = new wp.Browser('safari');
-		browser.saveAs(['safari', 's']);
+		// omit "browser.appName = 'safari'"
+		browser.saveAsOption(['safari', 's']);
 
 		var place = new wp.Place('http://facebook.com/');
 		place.setBrowser(wp.Browser.find('s'));
