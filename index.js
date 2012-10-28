@@ -1,31 +1,29 @@
-var fs = require('fs');
+var util = require('util');
 
-process.env.NODE_CONFIG_DIR = __dirname + '/config';
+var Wp = function (defaultParam) {
+	defaultParam = defaultParam || {};
 
-var wp = {
-	Place   : require(__dirname + '/lib/Place'),
-	Browser : require(__dirname + '/lib/Browser'),
-
-	loadBookmark : function (bookmark) {
-		bookmark = bookmark || {};
-
-		this.Place.bookmark = bookmark.places || {};
-		this.Browser.bookmark = bookmark.browsers || {};
-	},
-
-	saveBookmarkFile : function (filePath) {
-		var bookmark = {
-			places: this.Place.bookmark,
-			browsers: this.Browser.bookmark
-		};
-
-		fs.writeFileSync(filePath, 'utf8', JSON.stringify(bookmark));
-	},
-
-	loadBookmarkFile : function (filePath) {
-		var content = fs.readFileSync(filePath, 'utf8');
-		return this.loadBookmark(JSON.parse(content) || {});
-	}
+	this.setURL(defaultParam.url || defaultParam);
+	this.setApplication(defaultParam.application);
 };
 
-module.exports = wp;
+// URLを設定
+Wp.prototype.setURL = function (url) {
+	return this.url = url || null;
+};
+
+// 開くアプリケーションを指定
+Wp.prototype.setApplication = function (application) {
+	return this.application = application || null;
+};
+
+Wp.prototype.commandToOpen = function () {
+	if (!this.url) {
+		return false;
+	}
+
+	return util.format('open "%s"', this.url);
+};
+
+
+module.exports = Wp;
