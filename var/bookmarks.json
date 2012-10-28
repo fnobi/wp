@@ -1,0 +1,30 @@
+{
+	"safari": {
+		"application": "safari"
+	},
+	"s": { "alias": "safari" },
+	"chrome": {
+		"application": "google chrome"
+	},
+	"c": { "alias": "chrome" },
+	"firefox": {
+		"application": "firefox"
+	},
+	"f": { "alias": "firefox" },
+	"opera": {
+		"application": "opera"
+	},
+	"o": { "alias": "opera" },
+	"facebook": {
+		"url": "http://facebook.com",
+		"application": "safari"
+	},
+	"fb": { "alias": "facebook" },
+	"outputclip": {
+		"url": "http://sfcclip.net/outputclip/"
+	},
+	"opc": { "alias": "outputclip" },
+	"enterclip": {
+		"url": "http://sfcclip.net/outputclip/enterclip.html"
+	}
+}

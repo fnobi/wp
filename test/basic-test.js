@@ -1,43 +1,79 @@
-var buster = require('buster'),
-    wp     = require(__dirname + '/..');
+var util   = require('util'),
+    buster = require('buster'),
+    Wp     = require(__dirname + '/..');
 
-buster.testCase('command to open url', {
-	'normally': function () {
+buster.testCase('wp', {
+	'return command to open url': function () {
+		var url = 'http://facebook.com/';
+
 		assert.equals(
-			new wp.Place('http://facebook.com/').commandToOpen(),
-			'open "http://facebook.com/"'
+			new Wp(url).commandToOpen(),
+			util.format('open "%s"', url)
 		);
 	},
+
+	'set url by two ways': function () {
+		var url = 'http://facebook.com/';
+
+		var wp1 = new Wp(url);
+		var wp2 = new Wp();
+		wp2.setURL(url);
+
+		assert.equals(
+			wp1.commandToOpen(),
+			wp2.commandToOpen()
+		);
+	},
+
 	'with browser': function () {
-		var browser = new wp.Browser('safari');
-		browser.appName = 'safari';
-		browser.saveAsOption(['safari', 's']);
+		var url = 'http://fnobi.com';
+		var application = 'safari';
+		var option = 's';
+
+		Wp.bookmarks = {};
+		Wp.bookmarks[option] = {
+			application: application
+		};
+
+		var wp = Wp.bookmark.load(option);
+		wp.setURL(url);
 
 		assert.equals(
-			new wp.Place('http://fnobi.com/').commandToOpen(browser),
-			'open -a "safari" "http://fnobi.com/"'
+			wp.commandToOpen(),
+			util.format('open -a "%s" "%s"', application, url)
 		);
 	},
+
 	'with place': function () {
-		var place = new wp.Place('http://facebook.com/');
-		place.saveAs(['fb', 'facebook', 'facebook.com']);
+		var url = 'http://facebook.com/';
+		var key = 'fb';
+
+		Wp.bookmarks = {};
+		Wp.bookmarks[key] = {
+			url: url
+		};
 
 		assert.equals(
-			wp.Place.find('fb').commandToOpen(),
-			'open "http://facebook.com/"'
+			Wp.bookmark.load(key).commandToOpen(),
+			util.format('open "%s"', url)
 		);
 	},
-	'with place and browser': function () {
-		var browser = new wp.Browser('safari');
-		// omit "browser.appName = 'safari'"
-		browser.saveAsOption(['safari', 's']);
 
-		var place = new wp.Place('http://facebook.com/');
-		place.setBrowser(wp.Browser.find('s'));
-		place.saveAs(['fb', 'facebook', 'facebook.com']);
+	'with place and browser': function () {
+		Wp.bookmark = {
+			's': {
+				application: 'safari'
+			},
+			'fb': {
+				url: 'http://facebook.com'
+			}
+		};
+
+		var wp = Wp.bookmark.load('s');
+		wp.loadBookmark('fb');
 
 		assert.equals(
-			wp.Place.find('fb').commandToOpen(),
+			wp.commandToOpen(),
 			'open -a "safari" "http://facebook.com/"'
 		);
 	}
