@@ -25,18 +25,34 @@ buster.testCase('wp', {
 		);
 	},
 
+	'load bookmark': function () {
+		var url = 'http://fnobi.com';
+		var application = 'safari';
+		var option = 's';
+
+		Wp.bookmark.clear();
+		Wp.bookmark.add(option, {
+			application: application
+		});
+
+		assert.equals(
+			Wp.bookmark.paramFor(option).application,
+			application
+		);
+	},
+
 	'with browser': function () {
 		var url = 'http://fnobi.com';
 		var application = 'safari';
 		var option = 's';
 
-		Wp.bookmarks = {};
-		Wp.bookmarks[option] = {
+		Wp.bookmark.clear();
+		Wp.bookmark.add(option, {
 			application: application
-		};
+		});
 
-		var wp = Wp.bookmark.load(option);
-		wp.setURL(url);
+		var wp = new Wp(url);
+		wp.loadBookmark(option);
 
 		assert.equals(
 			wp.commandToOpen(),
@@ -48,33 +64,38 @@ buster.testCase('wp', {
 		var url = 'http://facebook.com/';
 		var key = 'fb';
 
-		Wp.bookmarks = {};
-		Wp.bookmarks[key] = {
+		Wp.bookmark.clear();
+		Wp.bookmark.add(key, {
 			url: url
-		};
+		});
+
+		var wp = new Wp();
+		wp.loadBookmark(key);
 
 		assert.equals(
-			Wp.bookmark.load(key).commandToOpen(),
+			wp.commandToOpen(),
 			util.format('open "%s"', url)
 		);
 	},
 
 	'with place and browser': function () {
-		Wp.bookmark = {
+		Wp.bookmark.clear();
+		Wp.bookmark.add({
 			's': {
 				application: 'safari'
 			},
 			'fb': {
 				url: 'http://facebook.com'
 			}
-		};
+		});
 
-		var wp = Wp.bookmark.load('s');
+		var wp = new Wp();
+		wp.loadBookmark('s');
 		wp.loadBookmark('fb');
 
 		assert.equals(
 			wp.commandToOpen(),
-			'open -a "safari" "http://facebook.com/"'
+			'open -a "safari" "http://facebook.com"'
 		);
 	}
 });
