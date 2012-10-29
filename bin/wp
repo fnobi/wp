@@ -1,24 +1,19 @@
 #!/usr/bin/env node
 
 var pkj        = require(__dirname + '/../package.json'),
-    wp         = require(__dirname + '/../'),
+    Wp         = require(__dirname + '/../'),
     _          = require('underscore'),
     OptCollect = require('optcollect');
 
 var opts = new OptCollect();
 
-var placeName    = _.last(opts.args);
-var option = _.first(opts.options);
+var placeName = _.last(opts.args);
+var option    = _.first(opts.options);
 
-wp.loadBookmarkFile(__dirname + '/../var/bookmark.json');
+Wp.bookmark.readFile(__dirname + '/../var/bookmarks.json');
 
-var browser = wp.Browser.find(option);
+var wp = new Wp(placeName);
+wp.loadBookmark(placeName);
+wp.loadBookmark(option);
 
-var place = wp.Place.find(placeName) || new wp.Place(placeName);
-
-place.open(browser, function (err, res) {
-	if (err) {
-		console.error(err);
-		return;
-	}
-});
+wp.open();

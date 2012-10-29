@@ -1,23 +1,15 @@
-var util = require('util');
+var util       = require('util'),
+    isHostName = require(__dirname + '/lib/isHostName'),
+    exec       = require('child_process').exec;
 
 var Wp = function (defaultParam) {
 	defaultParam = defaultParam || {};
 
-	this.setURL(defaultParam.url || defaultParam);
-	this.setApplication(defaultParam.application);
+	this.url = defaultParam.url || defaultParam || null;
+	this.application = defaultParam.application || null;
 };
 
 Wp.bookmark = require(__dirname + '/lib/bookmark');
-
-// URLを設定
-Wp.prototype.setURL = function (url) {
-	return this.url = url || null;
-};
-
-// 開くのに使うアプリケーションを指定
-Wp.prototype.setApplication = function (application) {
-	return this.application = application || null;
-};
 
 Wp.prototype.loadBookmark = function (key) {
 	var param = Wp.bookmark.paramFor(key) || {};
@@ -32,6 +24,8 @@ Wp.prototype.commandToOpen = function () {
 		return false;
 	}
 
+	var url = isHostName(this.url) ? 'http://' + this.url : this.url;
+
 	var terms = [];
 	terms.push('open');
 
@@ -40,12 +34,20 @@ Wp.prototype.commandToOpen = function () {
 		terms.push(util.format('"%s"', this.application));
 	}
 
-	if (this.url) {
-		terms.push(util.format('"%s"', this.url));
+	if (url) {
+		terms.push(util.format('"%s"', url));
 	}
 
 
 	return terms.join(' ');
+};
+
+Wp.prototype.open = function (callback) {
+	exec(this.commandToOpen(), function (err, res) {
+		if (err) {
+			console.error(err);
+		}
+	});
 };
 
 module.exports = Wp;

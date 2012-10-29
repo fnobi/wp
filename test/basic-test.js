@@ -17,7 +17,7 @@ buster.testCase('wp', {
 
 		var wp1 = new Wp(url);
 		var wp2 = new Wp();
-		wp2.setURL(url);
+		wp2.url = url;
 
 		assert.equals(
 			wp1.commandToOpen(),
@@ -96,6 +96,30 @@ buster.testCase('wp', {
 		assert.equals(
 			wp.commandToOpen(),
 			'open -a "safari" "http://facebook.com"'
+		);
+	},
+
+	'alias': function () {
+		Wp.bookmark.clear();
+		Wp.bookmark.add({
+			'safari': { application: 'safari' },
+			's': { alias: 'safari' }
+		});
+
+		var wp = new Wp('http://fnobi.com');
+		wp.loadBookmark('s');
+
+		assert.equals(
+			wp.commandToOpen(),
+			'open -a "safari" "http://fnobi.com"'
+		);
+	},
+
+	'omit "http://"': function () {
+		var wp = new Wp('facebook.com');
+		assert.equals(
+			wp.commandToOpen(),
+			'open "http://facebook.com"'
 		);
 	}
 });
