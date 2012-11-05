@@ -116,10 +116,24 @@ buster.testCase('wp', {
 	},
 
 	'omit "http://"': function () {
-		var wp = new Wp('facebook.com');
 		assert.equals(
-			wp.commandToOpen(),
+			(new Wp('facebook.com')).commandToOpen(),
 			'open "http://facebook.com"'
+		);
+
+		assert.equals(
+			(new Wp('localhost')).commandToOpen(),
+			'open "http://localhost"'
+		);
+
+		assert.equals(
+			(new Wp('localhost:12')).commandToOpen(),
+			'open "http://localhost:12"'
+		);
+
+		assert.equals(
+			(new Wp('1.23.45.67')).commandToOpen(),
+			'open "http://1.23.45.67"'
 		);
 	}
 });

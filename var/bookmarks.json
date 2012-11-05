@@ -15,16 +15,11 @@
 		"application": "opera"
 	},
 	"o": { "alias": "opera" },
+
+
 	"facebook": {
 		"url": "http://facebook.com",
 		"application": "safari"
 	},
-	"fb": { "alias": "facebook" },
-	"outputclip": {
-		"url": "http://sfcclip.net/outputclip/"
-	},
-	"opc": { "alias": "outputclip" },
-	"enterclip": {
-		"url": "http://sfcclip.net/outputclip/enterclip.html"
-	}
+	"fb": { "alias": "facebook" }
 }
