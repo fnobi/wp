@@ -13,7 +13,7 @@
   "engines": {
     "node": "*"
   },
-  "author": "fnobi <shin@fnobi.com> (http://github.com/fnobi)",
+  "author": "fnobi <shin@fnobi.com> (http://blog.fnobi.com/)",
   "description": "quickly open url or built-in bookmark with browser.",
   "homepage": "http://github.com/fnobi/wp",
   "repository": {
@@ -23,5 +23,7 @@
   "scripts": {
     "test": "buster test"
   },
-  "os" : ["darwin"]
+  "os": [
+    "darwin"
+  ]
 }

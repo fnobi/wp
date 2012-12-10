@@ -24,9 +24,19 @@ Wp.prototype.commandToOpen = function () {
 		return false;
 	}
 
-	var url = isHostName(this.url) ? 'http://' + this.url : this.url;
+	var url; var terms;
 
-	var terms = [];
+	url = this.url;
+	// urlが数字のみで構成されていたら、localhostのport番号と解釈
+	if (url.match(/^[0-9]+$/)) {
+		url = 'localhost:' + url;
+	}
+	// urlがhost名だったら、http://を付ける
+	if (isHostName(url)) {
+		url = 'http://' + this.url;
+	}
+
+	terms = [];
 	terms.push('open');
 
 	if (this.application) {
