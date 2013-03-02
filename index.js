@@ -33,7 +33,7 @@ Wp.prototype.commandToOpen = function () {
 	}
 	// urlがhost名だったら、http://を付ける
 	if (isHostName(url)) {
-		url = 'http://' + this.url;
+		url = 'http://' + url;
 	}
 
 	terms = [];
